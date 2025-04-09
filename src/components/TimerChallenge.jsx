@@ -1,14 +1,20 @@
 import { useState, useRef } from "react";
-
 import ResultModal from "./ResultModal.jsx";
+import ScoreStars from "./ScoreStars.jsx";
 
 export default function TimerChallenge({ title, targetTime }) {
   const timer = useRef();
   const dialog = useRef();
 
-  const [remainingTime, setRemainingTime] = useState(targetTime * 1000);
+  const [remainingTime, setRemainingTime] = useState(targetTime);
 
-  const timerIsActive = remainingTime > 0 && remainingTime < targetTime * 1000;
+  const timerIsActive = remainingTime > 0 && remainingTime < targetTime;
+
+  const score = (targetTime - remainingTime);
+
+  const [bestScore, setBestScore] = useState(0);
+
+  const newRecord = (score > bestScore && score < targetTime);
 
   if (remainingTime <= 0) {
     clearInterval(timer.current);
@@ -27,16 +33,29 @@ export default function TimerChallenge({ title, targetTime }) {
   }
 
   function handleReset() {
-    setRemainingTime(targetTime * 1000);
+    if (newRecord) {
+      setBestScore(score);
+    }
+    setRemainingTime(targetTime);
   }
 
   return (
     <>
-      <ResultModal ref={dialog} targetTime={targetTime} remainingTime={remainingTime} onReset={handleReset} />
+      <ResultModal
+        ref={dialog}
+        targetTime={targetTime}
+        score={score}
+        newRecord={newRecord}
+        onReset={handleReset}
+      />
       <section className="challenge">
         <h2>{title}</h2>
         <p className="challenge-time">
-          {targetTime} segundo{targetTime > 1 ? "s" : ""}
+          {(targetTime / 1000)} segundo{targetTime > 1000 ? "s" : ""}
+        </p>
+        <p>
+          <ScoreStars score={bestScore} targetScore={targetTime} />
+          Recorde: {bestScore / 1000}s
         </p>
         <p>
           <button onClick={timerIsActive ? handleStop : handleStart}>

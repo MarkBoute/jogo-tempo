@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Handjet:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Handjet:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -6,7 +6,7 @@
 
 body {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: radial-gradient(#186a5e, #053339);
@@ -24,7 +24,7 @@ body {
 }
 
 h1 {
-  font-family: 'Handjet', monospace;
+  font-family: "Handjet", monospace;
   text-align: center;
   text-transform: uppercase;
   color: #c1e2dd;
@@ -105,6 +105,7 @@ header p {
   color: #221c18;
   box-shadow: 0 2px 8px rgba(35, 34, 34, 0.6);
   border-radius: 6px;
+  text-align: center;
 }
 
 .challenge button {
@@ -159,7 +160,7 @@ header p {
 }
 
 .result-modal h2 {
-  font-family: 'Handjet', monospace;
+  font-family: "Handjet", monospace;
   margin: 0 0 0.25rem 0;
   font-size: 3rem;
   text-transform: uppercase;
@@ -198,6 +199,15 @@ header p {
 
 .result-modal button:hover {
   background: #051715;
+}
+
+.result-modal .new-record {
+  animation: flash 1s infinite;
+}
+
+.scoreStars svg {
+  height: 40px;
+  width: 40px;
 }
 
 @keyframes slide-in-from-top {

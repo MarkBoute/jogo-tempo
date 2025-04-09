@@ -1,17 +1,16 @@
 import { useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
+import ScoreStars from "./ScoreStars.jsx";
 
 export default function ResultModal({
   ref,
+  score,
   targetTime,
-  remainingTime,
+  newRecord,
   onReset,
 }) {
   const dialog = useRef();
-
-  const gameOver = remainingTime <= 0;
-  const formattedRemainingTime = (targetTime - (remainingTime / 1000)).toFixed(2);
-  const score = (1 - (remainingTime / targetTime) * 1000) * 100;
+  const gameOver = targetTime-score <= 0;
 
   useImperativeHandle(ref, () => {
     return {
@@ -23,14 +22,16 @@ export default function ResultModal({
 
   return createPortal(
     <dialog ref={dialog} className="result-modal" onClose={onReset}>
-      <h2>{gameOver ? "O tempo acabou..." : "Parabéns!"}</h2>
-      <p>
-        
-      </p>
-      <p>
-        {!gameOver && <>O objetivo era : <strong>{targetTime} s</strong><br/>
-          Seu tempo foi : <strong>{formattedRemainingTime} s</strong></>}
-      </p>
+      <h2>
+        {gameOver ? "Passou do tempo..." : "Parabéns"}
+        {newRecord && <span className="new-record"><br/>Novo recorde</span>}
+      </h2>
+      {!gameOver && (
+        <p>
+          <ScoreStars score={score} targetScore={targetTime} />
+          Seu tempo foi : <strong>{score / 1000}s</strong>
+        </p>
+      )}
       <form method="dialog" onSubmit={onReset}>
         <button>Voltar</button>
       </form>

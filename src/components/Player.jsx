@@ -18,7 +18,7 @@ export default function Player() {
 
   return (
     <section id="player">
-      <h2>Olá, {(inputName && inputName !== "") ? inputName : "desconhecido"}!</h2>
+      <h2>Olá{(inputName && inputName !== "") ? `, ${inputName}` : ""}!</h2>
       <p>
         {/* <input ref={playerName} type="text" onChange={handleChange} value={playerName} /> */}
         <input ref={playerName} type="text" placeholder="digite aqui seu nome" />
